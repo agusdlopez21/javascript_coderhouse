@@ -3,12 +3,14 @@ let opcion;
 let juego;
 let total = 0;
 let seguir = true;
-// 'C:/Users/agusd/Desktop/Agustin/00 - Programacion/00 - Estudios/00 - Coderhouse/00 - Desarrollador Full Stack/02 - JavaScript/06 - Arrays (Desafio Compl)/arrays'
+
+
 //Arrays
 const catalogo = ["1) Minecraft.\n", "2) Call of Duty.\n", "3) FIFA.\n", "4) Formula 1.\n"];
 const callOfDuty = ["1) Modern Warfane 2.\n", "2) Black Ops 3.\n", "3)Ghost.\n"];
 const fifa = ["1) FIFA 20.\n", "2) FIFA 21.\n", "3) FIFA 22.\n"];
 const formulaUno = ["1) F1 20.\n", "2) F1 21.\n", "3) F1 22.\n"];
+
 
 // Ciclo while para preguntar si el usuario quiere seguir comprando o no
 while (seguir) {
@@ -18,6 +20,7 @@ while (seguir) {
         juego = prompt("Elija un juego de nuestra lista." + "\n" + catalogo.join('')).toLowerCase();
     }
 
+    
     // Hago un switch para que el usuario elija su juego preferido y otro para que elija algunas de las opciones que tenga el juego elejido
     switch(juego){
         case "1" :
