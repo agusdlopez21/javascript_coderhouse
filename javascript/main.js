@@ -6,7 +6,7 @@ class videoJuego {
     }
 }
 
-//asd
+
 class Carro {
     constructor(total){
         this.videoJuegos = []
