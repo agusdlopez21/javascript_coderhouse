@@ -1,150 +1,125 @@
-class videoJuego {
-    constructor(titulo, juego, precio) {
-        this.titulo = titulo;
-        this.juego = juego;
-        this.precio = precio;
+const divGames = document.getElementById("divGames")
+const tablaCarrito = document.getElementById("tablaCarrito")
+const totalCarrito = document.getElementById("totalCarrito")
+
+document.addEventListener('DOMContentLoaded', () => {
+    mostrarCarrito()
+    mostrarTotalCarrito()
+    mostrarProductos(game)
+    console.log('DOM fully loaded and parsed');
+});
+
+function mostrarProductos(game){
+    divGames.innerHTML=""
+    game.forEach(juego => {
+        divGames.innerHTML+=`
+        <div class="card mb-4 texto" style="width: auto;">
+            <img src="${juego.img}" class="card-img-top" alt="..." style="height:15rem;">
+            <div class="card-body">
+                <h5 class="card-title texto">${juego.titulo} ${juego.juego}</h5>
+                <p class="card-text texto">$ ${juego.precio}</p>
+                <button onclick="agregarAlCarrito(${juego.id})" class="btn btn-success texto">Comprar</button>
+            </div>
+        </div>
+        `
+    });
+}
+
+function mostrarCarrito() {
+    let carrito = capturarStorage()
+    tablaCarrito.innerHTML =""
+    carrito.forEach(element => {
+        tablaCarrito.innerHTML+= `
+        <tr">
+            <td data-th="Product">
+                <div class="row">
+                <div class="col-sm-2 hidden-xs"><img src="${element.img}" width=64px alt="..."/></div>
+                    <div class="col-sm-10">
+                        <h4 class="nomargin">${element.titulo} ${element.juego}</h4>
+                    </div>
+                </div>
+            </td>
+            <td data-th="Precio">${element.precio}</td>
+            <td data-th="Cantidad">
+                <div class="column d-flex align-items-center">
+                    <button class="btn btn-sm" onclick="restarCant(${element.id})"><i class="fa-solid fa-square-minus"></i></button>
+                    <p class="form-control text-center mb-0 texto">${element.cantidad}</p>
+                    <button class="btn btn-sm" onclick="incrementarCant(${element.id})"><i class="fa-solid fa-square-plus"></i></button>
+                </div>
+            </td>
+            <td data-th="Subtotal" class="text-center">${element.precio * element.cantidad}</td>
+            <td><button onclick="eliminarProductoCarrito(${element.id})" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></button></td>
+        </tr>
+        `
+    });
+}
+
+function capturarStorage(){
+    return JSON.parse(localStorage.getItem("carrito")) || []
+}
+
+function guardarStorage(array){
+    localStorage.setItem("carrito", JSON.stringify(array))
+}
+
+function agregarAlCarrito(id) {
+    let carrito = capturarStorage()
+    if (estaEnCarrito(id)){
+        incrementarCant(id)
+    } else {
+        let productoEncontrado = game.find(juego=>juego.id==id)
+        carrito.push({...productoEncontrado, cantidad: 1})
+        guardarStorage(carrito)
+        mostrarCarrito()
     }
+    mostrarCarrito()
+    console.log(carrito)
+    mostrarTotalCarrito()
+}
+
+function incrementarCant(id) {
+    let carrito = capturarStorage()
+    const indice = carrito.findIndex(juego => juego.id==id)
+    carrito[indice].cantidad++
+    guardarStorage(carrito)
+    mostrarCarrito()
+    mostrarTotalCarrito()
+}
+
+function restarCant(id) {
+    let carrito = capturarStorage();
+    const index = carrito.findIndex((e) => e.id == id); // busco la posicion del objeto
+    if (carrito[index].cantidad > 1) {
+      carrito[index].cantidad--; //segun la posicion le resto uno a cantidad
+      guardarStorage(carrito);
+      mostrarCarrito();
+      mostrarTotalCarrito();
+    } else {
+      carrito = confirm(`desea eliminar ${carrito[index].titulo} ${carrito[index].juego} del carrito de compras`) && eliminarProductoCarrito(id);
+    }
+  }
+
+function estaEnCarrito(id){
+    let carrito = capturarStorage()
+    return carrito.some(e=>e.id==id)
+}
+
+function eliminarProductoCarrito(id) {
+    let carrito = capturarStorage()
+    //filtramos y hacemos que nos devuelva todo menos el id buscado
+    let resultado = carrito.filter(juego => juego.id != id)
+    guardarStorage(resultado)
+    console.log(resultado)
+    mostrarCarrito()
+    mostrarTotalCarrito()
 }
 
 
-class Carro {
-    constructor(total){
-        this.videoJuegos = []
-        this.total = total
-    }
-    agregarAlCarro (game){
-        this.videoJuegos.push(game)
-        this.total += game.precio
-    }
-    
-    MostrarCarrito(){
-        this.videoJuegos.forEach(listado => {
-            console.log(listado);
-        });
-    }
-}
-
-let titulo;
-let juego;
-let seguir = true;
-
-const game = [ {titulo: "Minecraft", juego:"Gratis", precio: 0},
-               {titulo: "Minecraft", juego:"Premium", precio: 29.99},
-               {titulo: "Call of Duty", juego:"Modern Warfane 2", precio: 70.00},
-               {titulo: "Call of Duty", juego:"Blcak Ops 2", precio: 42.00},
-               {titulo: "Call of Duty", juego:"Ghost", precio: 58.00},
-               {titulo: "FIFA", juego:"FIFA 20", precio: 19.72},
-               {titulo: "FIFA", juego:"FIFA 21", precio: 16.71},
-               {titulo: "FIFA", juego:"FIFA 22", precio: 15.63},
-               {titulo: "Formula 1", juego:"F1 20", precio: 30.30},
-               {titulo: "Formula 1", juego:"F1 21", precio: 57.49},
-               {titulo: "Formula 1", juego:"F1 22", precio: 45.54}];
-
-const carro = new Carro(0); 
-
-
-// Ciclo while para preguntar si el usuario quiere seguir comprando o no
-while (seguir) {
-    juego = prompt("Elija el juego que desea adquirir para su PC. \n 1) Minecraft.\n 2) Call of Duty. \n 3) FIFA.\n 4) Formula 1.").toLowerCase();
-    while ((juego != "1") && (juego != "2") && (juego != "3") && (juego != "4")){
-        alert ("Error el juego elejido no se encuentra en nuestra lista");
-        juego = prompt("Elija un juego de nuestra lista. \n 1) Minecraft.\n 2) Call of Duty. \n 3) FIFA.\n 4) Formula 1.").toLowerCase();
-    }
-
-    
-    // Hago un switch para que el usuario elija su juego preferido y otro para que elija algunas de las opciones que tenga el juego elejido
-    switch(juego){
-        case "1" :
-            titulo = prompt("Este juego puede Obtenerlo de manera gratuita o tiene la opcion premium ¿Cual desea adquirir? \n 1) Gratis \n 2) Premium");
-            while ((titulo != "1") && (titulo != "2")){
-                alert ("Error ingrese una opcion valida");
-                titulo = prompt("Elija una opcion. \n 1) Gratis \n 2) Premium").toLowerCase();
-            }
-            switch(titulo){
-                case "1":
-                    alert("Usted eligió Minecraft Gratis (Precio: $0)");
-                    carro.agregarAlCarro(game[0])
-                    break;
-                case "2":
-                    alert("Usted eligió Minecraft Premium (Precio: $29.99 dolares)");
-                    carro.agregarAlCarro(game[1])
-                    break;
-            }
-            break;
-
-        case "2":
-            titulo = prompt("¿Cual Call of Duty quieres? \n 1) Modern Warfane 2 \n 2) Blcak Ops 3 \n 3) Ghost");
-            while ((titulo != "1") && (titulo != "2") && (titulo != "3")){
-                alert ("Error ingrese una opcion valida");
-                titulo = prompt("Elija una opcion. \n 1) Modern Warfane 2 \n 2) Blcak Ops 3 \n 3) Ghost").toLowerCase();
-            }
-            switch(titulo){
-                case "1":
-                    alert("Usted eligió Call of Duty Modern Warfane 2 (Precio: $70.00 dolares)");
-                    carro.agregarAlCarro(game[2])
-                    break;
-                case "2":
-                    alert("Usted eligió Call of Duty Blcak Ops 3 (Precio: $42.00 dolares)");
-                    carro.agregarAlCarro(game[3])
-                    break;
-                case "3":
-                    alert("Usted eligió Call of Duty Ghost (Precio: $58.00 dolares)");
-                    carro.agregarAlCarro(game[4])
-                    break;
-            }
-            break;
-        case "3":
-           titulo = prompt("Tenemos varios juegos de FIFA ¿Cual elijes? \n 1) FIFA 20 \n 2) FIFA 21 \n 3) FIFA 22").toLowerCase();
-            while ((titulo != "1") && (titulo != "2") && (titulo != "3")){
-                alert ("Error ingrese una opcion valida");
-                titulo = prompt("Elija una opcion. \n 1) FIFA 20 \n 2) FIFA 21 \n 3) FIFA 22").toLowerCase();
-            }
-            switch(titulo){
-                case "1":
-                    alert("Usted eligió FIFA 20 (Precio: $19.72 dolares)");
-                    carro.agregarAlCarro(game[5])
-                    break;
-                case "2":
-                    alert("Usted eligió FIFA 21 (Precio: $16.71 dolares)");
-                    carro.agregarAlCarro(game[6])
-                    break;
-                case "3":
-                    alert("Usted eligió FIFA 22 (Precio: $15.63 dolares)");
-                    carro.agregarAlCarro(game[7])
-                    break;
-            }
-            break;
-        case "4":
-            titulo = prompt("Tenemos varios juegos de Formula 1 ¿Cual elijes? \n 1) F1 20 \n 1) F1 21 \n 1) F1 22").toLowerCase();
-            while ((titulo != "1") && (titulo != "2") && (titulo != "3")){
-                alert ("Error ingrese una opcion valida");
-                titulo = prompt("Elija una opcion." + "\n" + formulaUno.join('')).toLowerCase();
-            }
-            switch(titulo){
-                case "1":
-                    alert("Usted eligió F1 20 (Precio: $30.30 dolares)");
-                    carro.agregarAlCarro(game[8])
-                    break;
-                case "2":
-                    alert("Usted eligió F1 21 (Precio: $57.49 dolares)");
-                    carro.agregarAlCarro(game[9])
-                    break;
-                case "3":
-                    alert("Usted eligió F1 22 (Precio: $45.54 dolares)");
-                    carro.agregarAlCarro(game[10])
-                    break;
-            }
-            break;
-    }
-
-    let opcionUno = prompt("¿Desea seguir comprando? Si/No").toLowerCase();
-    if (opcionUno == "no"){
-        seguir = false;
-    } 
-}
-
-
-alert(`Ver consola para ver la lista de productos`)
-carro.MostrarCarrito()
-alert(`El total de su compra es de: $${carro.total} dolares`);
-alert("¡Muchas gracias por su compra!");
+function mostrarTotalCarrito() {
+    //calculo el valor total
+    const carrito = capturarStorage();
+    const total = carrito.reduce(
+      (acc, element) => acc + element.cantidad * element.precio,0
+    );
+    totalCarrito.innerHTML = total.toFixed(1);
+  }
