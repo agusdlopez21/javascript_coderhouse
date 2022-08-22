@@ -77,6 +77,7 @@ function agregarAlCarrito(id) {
     mostrarTotalCarrito()
 }
 
+
 function incrementarCant(id) {
     let carrito = capturarStorage()
     const indice = carrito.findIndex(juego => juego.id==id)
@@ -95,9 +96,22 @@ function restarCant(id) {
       mostrarCarrito();
       mostrarTotalCarrito();
     } else {
-      carrito = confirm(`desea eliminar ${carrito[index].titulo} ${carrito[index].juego} del carrito de compras`) && eliminarProductoCarrito(id);
-    }
-  }
+        Swal.fire({
+            title: `¿Desea eliminar ${carrito[index].titulo} ${carrito[index].juego} del carrito de compras?`,
+            icon: 'question',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                carrito = Swal.getConfirmButton() && eliminarProductoCarrito(id)
+                Swal.fire(
+                    'Su producto fue eliminado correctamente',
+                    )
+                }
+            }
+            )}
+        }
 
 function estaEnCarrito(id){
     let carrito = capturarStorage()
@@ -123,3 +137,32 @@ function mostrarTotalCarrito() {
     );
     totalCarrito.innerHTML = total.toFixed(1);
   }
+
+
+botonPedidoRealizado.addEventListener('click', () => {
+    if (estaVacio()) {
+        Swal.fire({
+            icon: 'error',
+            title: 'El carrito esta vacío',
+            text: 'Agrega al menos un producto para realizar un pedido',
+        }) 
+    } else {
+        Swal.fire({
+            icon: 'success',
+            title: 'Pedido realizado con éxito',
+            confirmButtonText: 'Aceptar',
+        })
+        localStorage.clear();
+        mostrarCarrito();
+        mostrarTotalCarrito();
+    }
+})
+
+function estaVacio() {
+    if (capturarStorage() == "") {
+        return true
+    } else {
+        return false
+    }
+}
+
