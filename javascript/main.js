@@ -35,7 +35,7 @@ function mostrarProductos(game){ // Funcion para mostrar productos en el html
 
 function mostrarCarrito() { // Mostramos carrito
     let carrito = capturarStorage()
-    tablaCarrito.innerHTML =""
+    tablaCarrito.innerHTML =" "
     carrito.forEach(element => {
         tablaCarrito.innerHTML+= `
         <tr">
