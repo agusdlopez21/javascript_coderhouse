@@ -1,8 +1,196 @@
-.texto {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
+.brand-title {
+    font-size: 2rem;
+    margin: 0.5rem;
+    font-weight: 300;
+    padding-left: 1.8rem;
+
+}
+
+.brand-title a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.Navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(107, 173, 7);
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+.navbar-links {
+    display: flex;
+}
+
+.navbar-links i {
+    color: green;
+}
+
+.brand-title {
+    font-size: 2rem;
+    margin: 0.5rem;
+    font-weight: 300;
+    padding-left: 1.8rem;
+}
+
+.navbar-links ul {
+    margin: 0;
+    display: flex;
+}
+
+.navbar-links li {
+    list-style: none;
+}
+
+.navbar-links li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 1rem;
+    display: block;
+    font-family: "Work Sans", sans-serif;
+}
+
+.navbar-links li input {
+    display: block;
+    padding: 0.5rem;
+    border-radius: 0.4rem;
+    margin-top: 8px;
+}
+
+.navbar-links li:hover {
+    background-color: #460b0b;
+}
+
+.carousel {
+    margin-bottom: 4rem;
+}
+
+.carousel-caption {
+    bottom: 3rem;
+    z-index: 10;
+}
+
+.carousel-item {
+    height: 32rem;
+    background: #777;
+    color: white;
+    position: relative;
+}
+
+.carousel-item>img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 32rem;
+
+}
+
+/* Titulos del carrucel */
+.slider1-h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #000000;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.slider2-h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #fbd7d7;
+    text-shadow: rgb(0, 0, 0);
+    font-size: xx-large;
+}
+
+.slider3-h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #ffffff;
+    font-size: xx-large;
+}
+
+
+
+.icono {
+    flex-basis: calc(33.3% - 1rem);
     text-align: center;
-    color: darkgreen;
+}
+
+.cantCarrito {
+    background-color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0.2rem;
+    height: 50%;
+}
+
+
+.cart {
+    position: relative;
+    align-self: center;
+    padding: 0.3rem;
+    height: 100%;
+}
+
+
+/* -------------------Footer------------------ */
+
+.icon {
+    width: 1.5625em;
+    height: 1.5625em;
+}
+
+.iconos_redes ul li {
+    border-style: solid;
+    border-radius: 100%;
+    border: none;
+    padding: 0.3125em;
+}
+
+.iconos_redes ul {
+    display: flex;
+    justify-content: center;
+    margin: 0%;
+    padding: 0%;
+}
+
+.iconos_redes ul li a {
+    text-decoration: none;
+}
+
+footer {
+    background-color:rgb(107, 173, 7);
+    padding: 0.625em;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
+
+.icon {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(306deg) brightness(103%) contrast(104%);
+}
+
+.icon:hover {
+    filter: invert(20%) sepia(6%) saturate(2759%) hue-rotate(191deg) brightness(93%) contrast(84%);
+
+}
+
+.img-resp {
+    max-width: 100%;
+}
+
+.Copyright {
+    text-align: center;
+    color: #ffffff;
+}
+
+ul {
+    list-style-type: none;
 }
