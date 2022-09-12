@@ -41,6 +41,7 @@ function agregarAlCarrito(id) { // funcion para agregar productos al carrito
     }
     mostrarCarrito()
     console.log(carrito)
+    console.log(cantCarrito)
     mostrarTotalCarrito()
 }
 
@@ -48,6 +49,7 @@ function incrementarCant(id) {  // Funcion para incrementar cantidad cada vez qu
     let carrito = capturarStorage()
     const indice = carrito.findIndex(juego => juego.id==id)
     carrito[indice].cantidad++
+    aumentarEnCarrito()
     guardarStorage(carrito)
     mostrarCarrito()
     mostrarTotalCarrito()
@@ -87,12 +89,6 @@ function estaEnCarrito(id){ // verificacion de si esta en el carrito o no
 }
 
 function eliminarProductoCarrito(id) {// funcion para eliminar producto del carrito se filtra y hace que nos devuelva todo menos el id buscado
-    /* let carrito = capturarStorage()
-    let resultado = carrito.filter(juego => juego.id != id)    
-    guardarStorage(resultado)
-    console.log(resultado)
-    mostrarCarrito()
-    mostrarTotalCarrito() */
     let carrito = capturarStorage()
     let resultado = carrito.filter(celular => celular.id != id)
     const index = carrito.findIndex((e) => e.id == id);
@@ -102,8 +98,6 @@ function eliminarProductoCarrito(id) {// funcion para eliminar producto del carr
     mostrarEnCarrito()
     console.log(resultado)
     mostrarCarrito()
-    mostrarTotalCarrito()
-    
     borrarCarrito()
 }
 
@@ -124,6 +118,7 @@ botonPedidoRealizado.addEventListener('click', () => { // listener para realizar
         localStorage.clear();
         mostrarCarrito();
         mostrarTotalCarrito();
+        borrarCarrito()
         mostrarEnCarrito()
     }
 })
@@ -164,26 +159,26 @@ function mostrarEnCarrito(){
 const busqueda = () =>{ //funcion buscador
     const texto = formulario.value.toLowerCase();
     let encontro = false
-    divCelulares.innerHTML=""
-    for (let celular of dataTelefonos) {
-        let descripcion = celular.descripcion.toLowerCase();
+    divGames.innerHTML=""
+    for (let juegos of dataJuegos) {
+        let descripcion = juegos.descripcion.toLowerCase();
         if (descripcion.indexOf(texto) !== -1){
             encontro = true
-            divCelulares.innerHTML+=`
+            divGames.innerHTML+=`
             <div class="card mb-4" style="width: 18rem;">
-                <img src="${celular.img}" class="card-img-top" alt="...">
+                <img src="${juegos.img}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">${celular.descripcion}</h5>
-                    <p class="card-text">$ ${celular.precio}</p>
-                    <button onclick="agregarAlCarrito(${celular.id})" id="botonAgregar" class="btn btn-success">Agregar al Carrito</button>
+                    <h5 class="card-title">${juegos.descripcion}</h5>
+                    <p class="card-text">$ ${juegos.precio}</p>
+                    <button onclick="agregarAlCarrito(${juegos.id})" id="botonAgregar" class="btn btn-success">Agregar al Carrito</button>
                 </div>
             </div>
             `
         }   
     }
     if (encontro == false) {
-        divCelulares.innerHTML=""
-        divCelulares.innerHTML="<p>Producto no encontrado</p>"
+        divGames.innerHTML=""
+        divGames.innerHTML="<p>Producto no encontrado</p>"
     }  
 }
 botonBuscar.addEventListener('click', busqueda)

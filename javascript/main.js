@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => { //Cargamos funciones con D
     traerJson()
     mostrarCarrito()
     mostrarTotalCarrito()
+    mostrarEnCarrito()
     console.log('DOM fully loaded and parsed');
 });
 
@@ -28,7 +29,7 @@ function mostrarProductos(game){ // Funcion para mostrar productos en el html
         <div class="card mb-4 texto" style="width: auto;">
             <img src="${juego.img}" class="card-img-top" alt="..." style="height:15rem;">
             <div class="card-body">
-                <h5 class="card-title texto">${juego.titulo} ${juego.juego}</h5>
+                <h5 class="card-title texto">${juego.descripcion}</h5>
                 <p class="card-text texto">$ ${juego.precio}</p>
                 <button onclick="agregarAlCarrito(${juego.id})" class="btn btn-success texto">Comprar</button>
             </div>
