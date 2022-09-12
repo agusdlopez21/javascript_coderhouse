@@ -131,12 +131,21 @@ function estaVacio() {
     }
 }
 
+function estaVacio2() {
+    if (capturarStorage2() == "") {
+        return true
+    } else {
+        return false
+    }
+}
+
 
  // ----------- FUNCIONES PARA MODIFICAR EL NUMERO QUE SE ENCUENTRA AL LADO DEL CARRITO --------
  function aumentarEnCarrito() {
-    cantCarrito++
-    mostrarEnCarrito()
-    guardarStorage2(cantCarrito)
+     cantCarrito++
+     guardarStorage(cantCarrito)
+     guardarStorage2(cantCarrito)
+     mostrarEnCarrito()
 }
 
 function restarEnCarrito(){
@@ -147,6 +156,8 @@ function restarEnCarrito(){
 
 function borrarCarrito(){
     cantCarrito = 0
+    mostrarEnCarrito()
+    guardarStorage2(cantCarrito)
 }
 
 function mostrarEnCarrito(){

@@ -48,7 +48,7 @@ function mostrarCarrito() { // Mostramos carrito
                 <div class="row">
                 <div class="col-sm-2 hidden-xs"><img src="${element.img}" width=60px alt="..."/></div>
                     <div class="col-sm-10">
-                        <h5 class="nomargin">${element.titulo} ${element.juego}</h5>
+                        <h6 class="nomargin">${element.descripcion}</h6>
                     </div>
                 </div>
             </td>
